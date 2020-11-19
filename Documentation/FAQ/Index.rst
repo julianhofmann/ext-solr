@@ -10,6 +10,7 @@
 FAQ - Frequently Asked Questions
 ================================
 
+.. _core:
 
 **What does the term `"Core"<https://cwiki.apache.org/confluence/display/solr/Solr+Cores+and+solr.xml>`_  mean?**
 
@@ -19,12 +20,16 @@ For more informations please refer to the Apache Solr documentation.
 
 |
 
+.. _bugreports:
+
 **Where can I report a bug?**
 
 Please make sure that this bug is not reported already, use also the search function of our issue tracker.
 Our issue tracker is on `GitHub <https://github.com/TYPO3-Solr/ext-solr/issues/>`_.
 
 |
+
+.. _security-issues:
 
 **Where can I report a security issue?**
 
@@ -33,11 +38,15 @@ Please send an email to the `TYPO3 security team <mailto:security@typo3.org>`_ w
 
 |
 
+.. _chat:
+
 **Is there some chat/irc channel for EXT:solr available?**
 
 Join us on the official `Slack for TYPO3 <https://forger.typo3.org/slack>`_ and get answers related to EXT:solr in the #ext-solr channel immediately!
 
 |
+
+.. _plugins:
 
 **Which plugins(TYPO3 Frontend) are avalable?**
 
@@ -48,6 +57,8 @@ Join us on the official `Slack for TYPO3 <https://forger.typo3.org/slack>`_ and 
 Just insert one of this plugins on corresponding page to fade in the search form and/or supply the front end with a search results.
 
 |
+
+.. _search-is-currently-not-available:
 
 **When i open the search page i see the message 'Search is currently not available. ', whats wrong?**
 
@@ -61,6 +72,7 @@ Did you configure your solr connection as required?
 
 |
 
+.. _trigger-indexing-manually
 **In which cases do I want to trigger indexing manually?**
 
 - after changing any configuration file.
@@ -71,11 +83,15 @@ To reload configuration you can either restart the whole Solr server or simply r
 
 |
 
+.. _indexing-files:
+
 **I want to index files with EXT:solr. How can i do that?**
 
 We provide an addon called EXT:solrfal, that allows you to index files from FAL into Solr. This addon is currently available for partner only.
 
 |
+
+.. _using-fluid-templates:
 
 **How can i use Fluid templates with EXT:solr < v7.0.0?**
 
@@ -84,11 +100,15 @@ Since EXT:Solr 7.0 Fluid is the default templating engine.
 
 |
 
+.. _version-matrix:
+
 **Which versions of EXT:solr / EXT:solrfal and EXT:solrfluid work together?**
 
 Please check the :ref:`appendix-version-matrix`, the you can find the proposed version combinations.
 
 |
+
+.. _pages-are-not-indexed:
 
 **Pages are not indexed. I did everything by the book.**
 
@@ -96,11 +116,15 @@ You forgot to set `config.index_enable = 1` in your TypoScript setup: :ref:`star
 
 |
 
+.. _empty-indexed-documents:
+
 **My indexed documents are empty, i can not find the content of a page?**
 
 Did you configure the search markers ( "<!-- TYPO3SEARCH_begin -->" and "<!-- TYPO3SEARCH_end -->") on your page? Check the paragraph :ref:`started-search-markers` and make sure your page renders them.
 
 |
+
+.. _exclude-languages:
 
 **I have languages in TYPO3 that are not relevant for the search. How can i exclude them?**
 
@@ -128,12 +152,15 @@ Example:
 
 |
 
+.. _wrong-core:
 
 **The extension is indexing into the wrong core for multi-language sites. What's wrong?**
 
 When indexing pages the page indexer retrieves the core from the TypoScript configuration. That configuration is determined by the language (GET L parameter). However, when the indexer tries to index a page that has not been translated TYPO3 will by default still render the page but falling back to the default language page. By that TYPO3 will also use the TypoScript configuration for the default language which usually points to a different Solr core.
 
 Solution: Make sure you have configured config.sys_language_mode to use content_fallback. This way TYPO3 will fall back to the configured language's content, but will use the TypoScript configuration for the requested language.
+
+.. _change-does-not-trigger-update:
 
 **When i change a record, no update is detected. What's wrong?**
 
@@ -149,12 +176,15 @@ If you want to index records that are outside your sideroot, you need to configu
 
 |
 
+.. _stringS-vs-textS:
+
 **There are two datatypes for text stringS and textS. When should i choose which datatype?**
 
 String data types like stringS store the *raw* string. No processing, like stemming, splitting etc. is applied. The processing is useful when you want to search in the field and support more then exact matches. When you just want to display the content you should choose a *stringS* type, when you want to search in the field you should choose *textS*.
 
 |
 
+.. _dynamic-fields
 **I am adding content to a dynamic field but when i search for the content i can not find the document. What's wrong?**
 
 Beside the indexing part you need to configure the query part. Make sure that all relevant fields are configured as query fields:
@@ -166,6 +196,7 @@ Beside the indexing part you need to configure the query part. Make sure that al
 
     plugin.tx_solr.search.query.queryFields := addToList(test_textS\^1.0)
 
+.. _first-position:
 
 **I don't find the expected document on the first position. What can i do?**
 
@@ -202,6 +233,8 @@ You can use the backend module synonyms (:ref:`backend-module-synonyms`) to main
 
 Beside that, there are more options to tune. The DKD support can help you, to analyze and tune your search results. Call +49 (0)69 - 247 52 18-0.
 
+.. _non-ascii-characters:
+
 **Non ASCII characters like german umlauts do not work when i search, how do I fix that?**
 
 To allow search with umlauts Tomcat needs to be configured to use UTF-8 encoded urls. Go to apache-tomcat/conf/server.xml and change the URIEncoding parameter:
@@ -215,9 +248,13 @@ To allow search with umlauts Tomcat needs to be configured to use UTF-8 encoded 
         connectionTimeout="20000" redirectPort="8443"
         URIEncoding="UTF-8" />
 
+.. _adding-custom-fields:
+
 **How can I change Solr's schema and add custom fields?**
 
 Please do not change the shipped solr schema. There are a lot of dynamic fields (:ref:`appendix-dynamic-fields`) that can be used to index any kind of datatype.
+
+.. _varnish:
 
 **I am using varnish before my site. How can i index pages properly?**
 
@@ -265,6 +302,8 @@ Put this into your sub vcl_fetch part of the configuration
     }
 
 
+.. _docker:
+
 **I want to build the Dockerfile_full image on my mac with a local volume, how can i do that?**
 
 |
@@ -287,6 +326,8 @@ This was tested with "Docker for Mac" (not Docker Toolbox). Before executing the
     docker run -d -p 127.0.0.1:8282:8983 -v ~/solrdata:/var/solr/data/data typo3-solr
 
 
+.. _https:
+
 **Can i index a https (SSL) site?**
 
 Yes. You need a ssl certificate (can be self signed) and change the following setting:
@@ -296,6 +337,8 @@ Yes. You need a ssl certificate (can be self signed) and change the following se
     plugin.tx_solr.index.queue.pages.indexer.frontendDataHelper.scheme = https
 
 |
+
+.. _multiValue-field-from-user-function:
 
 **I want to index a value into a multiValue field from a user function. How can i do that?**
 
@@ -316,6 +359,7 @@ You can do that, by using SOLR_MULTIVALUE
 
 |
 
+.. _AdditionalConfiguration:
 **How can i use a configuration from AdditionalConfiguration.php when i deploy my application on several instances?**
 
 The configuration of the connection is done with typoscript. When you want to use a configuration from TYPO3_CONF_VARS or from the system environment,
@@ -346,6 +390,8 @@ value from the AdditionalConfiguration.php
 
 |
 
+.. _indexing-extension-records:
+
 **I want to index extension records, what do i need to do?**
 
 EXT:solr provides a flexible indexing for TYPO3 pages and records. You can add a custom indexing configuration for your own records with a valid TCA configuration.
@@ -360,6 +406,7 @@ The following things are important:
 
 |
 
+.. _cli-commands:
 **Are in EXT:solr some cli commands available?**
 
 Yes, currently(v. 6.1) only one for initializing solr connections.
@@ -368,6 +415,7 @@ But check for new ones with :code:`bin/typo3 list` command.
 |
 
 
+.. _overwrite-type-field-not-possible:
 **I want to overwrite the type field, why is this not possible?**
 
 The type field is a system field that EXT:solr uses to keep the system in sync. Overwritting this field might result in inconsistency.
@@ -401,6 +449,7 @@ The following example shows, how to fill the field "mytype_stringS" and build a 
 |
 
 
+.. _toggle functionality:
 **I want to implement a toggle functionality for facet options as previously possible with selectingSelectedFacetOptionRemovesFilter. How can i do that?**
 
 This is completely possible with Fluid core ViewHelpers and the domain model. The following steps are required.
@@ -436,6 +485,8 @@ This is the content of the OptionsToggle Partial (Feel free to adapt it to your 
         </f:if>
     </ul>
 
+.. _storing-html:
+
 **I want to store HTML in solr, how can i retrieve that?**
 
 In general it is not recommend to allow html in the solr field. Especially when you index content that can be changed by the user.
@@ -451,10 +502,14 @@ The following example shows how to avoid html in the content field:
 
 Note: When you allow html in the content please make sure that the usage of crop ViewHelpers or a limit of the field length does not break your markup.
 
+.. _two-instances-on-same-page:
+
 **I want to use two instances of the search plugin on the same page, how can i do that?**
 
 If you want to use two search plugins on the same page you can add two instances and assign a different "Plugin Namespace" in the flexform. If you want to avoid, that both plugins react on the global "q" parameter, you can disable this also in the flexform. Each instance is using the querystring from <pluginNamespace>[q] then.
 
+
+.. _switchable-templates:
 
 **How can i configure switchable templates for the results plugin?**
 
@@ -483,6 +538,8 @@ The following example shows, how you can configure a custom switchable entry tem
        }
    }
 
+
+.. _passing-connection-settings-from-outside:
 
 **I want to use EXT:solr with a deployment and pass connection settings from outside e.g. by the environment, how can i do that?**
 
@@ -526,6 +583,8 @@ And use them in your TypoScript configuration:
     }
 
 
+.. _singleOptionMode:
+
 **I want to use faceting.facets.[facetName].singleOptionMode why was it removed?**
 
 This setting belongs to the rendering and not to the facet itself. You can implement the same behaviour just with the given ViewHelpers.
@@ -534,6 +593,8 @@ The behaviour is the same, when you just call the ViewHelper s:uri.facet.setFace
 
 We've added an example partial "OptionsSinglemode" that shows this behaviour. The example TypoScript template "Search - (Example) Options with singlemode (only one option at a time)" shows how to use this partial in combination with the setting "keepAllOptionsOnSelection".
 
+
+.. _tab-facet-with-all-options:
 
 **I want to build a tab facet where all options remain, even with an option count of 0. How can i do that?**
 
@@ -555,6 +616,8 @@ This can be done with the combination of several settings:
 The example above changes the minimumCount to 0, the default value i 1. Setting it to zero allows to have options without any results.
 The setting "keepAllFacetsOnSelection" let all facets remain and with keepAllOptionsOnSelection the options in the type facet remain.
 
+.. _searchbox:
+
 **How can i add a searchbox on every page?**
 
 In most projects you want to add a searchbox on every content page. To support this, the default EXT:solr typoscript template provides the typoscript template path "plugin.tx_solr_PiSearch_Search" that contains a configured typoscript code to render the searchbox. When you want to add that to your project in the most cases you would need to refer to a search result page.
@@ -572,6 +635,8 @@ Afterwards you could render the typoscript path "lib.searchbox" with several way
     <f:cObject typoscriptObjectPath="lib.searchbox" />
 
 By adding the snippet to a generic tempate you could render the searchbox on every page.
+
+.. _index-protected-pages:
 
 **How can I index protected pages (htaccess protection)?**
 
@@ -600,6 +665,8 @@ Solution: Instead of passing the credentials as shown above, configure your webs
 	</RequireAny>
 
 Be aware, that this will allow all accesses by given IP.
+
+.. _different-host-configurations:
 
 **How can I use different host / port configurations in Solr v10 (e.g. for local environments)?**
 
